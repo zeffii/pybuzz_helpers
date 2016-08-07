@@ -21,14 +21,19 @@ def random_choice(items):
 def random_choice_w(items_w_weights):
     pass
 
-def utrk9p(trk=0, offset=None, note=None, smp=None, vol=None, pan=None, p1=None, p1val=None, p2=None, p2val=None):
-    ''' 
-    UTRK communication function, expects assignments of:
+def utrk_mixin(SPCC):
 
-        [offset, note, sample, vol, pan, param1, param1_val, param2, param_val]
-        ....     ...   ..      ..   ..   ..      ....        ..      ....
+    def utrk9p(trk=0, offset=None, note=None, smp=None, vol=None, pan=None, p1=None, p1val=None, p2=None, p2val=None):
+        ''' 
+        UTRK communication function, expects assignments of:
 
-    '''
-    for assignment_idx, param in enumerate([offset, note, smp, vol, pan, p1, p1val, p2, p2val]):
-        if not (param is None): 
-            SendPeerCtrlChange(assignment_idx, trk, param)
+            [offset, note, sample, vol, pan, param1, param1_val, param2, param_val]
+            ....     ...   ..      ..   ..   ..      ....        ..      ....
+
+        '''
+        for assignment_idx, param in enumerate([offset, note, smp, vol, pan, p1, p1val, p2, p2val]):
+            if not (param is None): 
+                SPCC(assignment_idx, trk, param)
+
+    return utrk9p
+
