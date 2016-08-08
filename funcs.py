@@ -18,8 +18,22 @@ def random_choice(items):
     index = random.randint(0, len(items)-1)
     return items[index]
 
-def random_choice_w(items_w_weights):
-    pass
+def random_choice_wdict(weighted_dict):
+    '''weights will automatically be normalized to total 1.0'''
+    summed_weights = sum(weighted_dict.values())
+    random_float = random.random() * summed_weights
+    lower = 0.0
+    last_item = None
+
+    # using sorted to keep the order stable
+    for k, v in sorted(weighted_dict.items()):
+        higher = lower + v
+        if random_float >= lower and random_float < higher:
+            return k
+        lower += v
+        last_item = k
+
+    return k
 
 def utrk_mixin(SPCC):
 
