@@ -6,6 +6,9 @@ if not (lib_origin in sys.path):
 
 import random
 
+def format_params(params):
+    return [(params[i], params[i+1]) for i in range(0, len(params)-1, 2)]
+
 def hex_to_int(hex_val):
     hex_val = str(hex_val) # just in case
     return int("0x" + hex_val, 0)
@@ -28,12 +31,12 @@ def random_choice_wdict(weighted_dict):
     # using sorted to keep the order stable
     for k, v in sorted(weighted_dict.items()):
         higher = lower + v
-        if random_float >= lower and random_float < higher:
-            return k
-        lower += v
         last_item = k
+        if random_float >= lower and random_float < higher:
+            return last_item
+        lower += v
 
-    return k
+    return last_item
 
 def utrk_mixin(SPCC):
 
