@@ -54,3 +54,13 @@ def utrk_mixin(SPCC):
 
     return utrk9p
 
+def assign_utrk9(buzz, name, start_index, params):
+    utrk1 = buzz.GetMachine(name)
+    params = format_params(params)
+    for idx, (k, v) in enumerate(params):
+        peerCtrlIndex = idx + start_index
+        buzz.SetPeerCtrlTarget(peerCtrlIndex, utrk1, 2, v)
+        buzz.SetPeerCtrlName(peerCtrlIndex, k)
+        print(idx, k, v)
+
+    return utrk_mixin(buzz.SendPeerCtrlChange)
