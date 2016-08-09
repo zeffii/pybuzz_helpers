@@ -70,6 +70,16 @@ def pbseq(triggers):
     '''
     return [idx for idx, k in enumerate(list(triggers)) if not k == '.']
 
-
-m = pbseq('1...1...1...1...1...')
-print(m)
+def pbseq_func(triggers, behaviours, tick):
+    '''
+    input: 
+        triggers="1...2...b...1...2..."
+        behaviours={
+            # trigger id: return value 
+            '1': 0, '2': 4, 'b': 20 }
+    output: [0,4,20,0,4]
+    # use for volumes / offsets / panning / sample_idx
+    returns the value associated with the key, or None if not listed.
+    '''
+    item = list(triggers)[tick]
+    return behaviours.get(item)
