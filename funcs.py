@@ -43,10 +43,8 @@ def utrk_mixin(SPCC):
     def utrk9p(trk=0, offset=None, note=None, smp=None, vol=None, pan=None, p1=None, p1val=None, p2=None, p2val=None):
         ''' 
         UTRK communication function, expects assignments of:
-
             [offset, note, sample, vol, pan, param1, param1_val, param2, param_val]
             ....     ...   ..      ..   ..   ..      ....        ..      ....
-
         '''
         for assignment_idx, param in enumerate([offset, note, smp, vol, pan, p1, p1val, p2, p2val]):
             if not (param is None): 
@@ -64,3 +62,14 @@ def assign_utrk9(buzz, name, start_index, params):
         print(idx, k, v)
 
     return utrk_mixin(buzz.SendPeerCtrlChange)
+
+def pbseq(triggers):
+    '''
+    input: "1...1...1...1...1..."
+    output: [0,4,8,12,16]
+    '''
+    return [idx for idx, k in enumerate(list(triggers)) if not k == '.']
+
+
+m = pbseq('1...1...1...1...1...')
+print(m)
