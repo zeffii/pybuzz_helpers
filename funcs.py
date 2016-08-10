@@ -96,6 +96,23 @@ def pbseq_func(triggers, behaviours, tick, wrap_around=True):
 
 
 class Assign_Greenmilk:
+    ''' expects input like
+    
+    params2 = [
+        #group, named, index
+        1, 'cutoff',    14,
+        1, 'resonance', 15,
+        1, 'speed',     22,
+        1, 'a',         10,
+        1, 'd',         11,
+        1, 's',         12,
+        1, 'r',         13,
+        2, 'note',       0,
+        2, 'velocity',   1
+    ]
+    milkysyn = assign_greenmilk(buzz, "Green Milk", 16, params2)
+    milkysyn.send( ... )
+    '''
 
     def __init__(self, buzz, name, start_index, params):
         self.machine_name = buzz.GetMachine(name)
@@ -112,7 +129,7 @@ class Assign_Greenmilk:
             self.lookups[k] = peerCtrlIndex
 
 
-    def greenmilk(self, **params):
+    def send(self, **params):
         trk = params.get('trk', 2)  # global params ignore this?
 
         for param_name, param_value in params.items():
