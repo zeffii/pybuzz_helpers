@@ -9,6 +9,9 @@ import random
 def format_params(params):
     return [(params[i], params[i+1]) for i in range(0, len(params)-1, 2)]
 
+def format3_params(params):
+    return [(params[i], params[i+1], params[i+2]) for i in range(0, len(params)-1, 3)]
+
 def hex_to_int(hex_val):
     hex_val = str(hex_val) # just in case
     return int("0x" + hex_val, 0)
@@ -90,3 +93,30 @@ def pbseq_func(triggers, behaviours, tick, wrap_around=True):
             item = list_triggers[tick]
             return behaviours.get(item)
     return None
+
+
+class Assign_Greenmilk:
+
+    def __init__(self, buzz, name, start_index, params):
+        self.machine_name = buzz.GetMachine(name)
+        self.params = format3_params(params)
+        self.lookups = {}
+        self.buzz = buzz
+        
+        # assign all necessary slots and make lookup-table.
+        for idx, (group, k, v) in enumerate(self.params):
+            peerCtrlIndex = idx + start_index
+            self.buzz.SetPeerCtrlTarget(peerCtrlIndex, self.machine_name, group, v)
+            self.buzz.SetPeerCtrlName(peerCtrlIndex, k)
+            print(peerCtrlIndex, group, k, v)
+            self.lookups[k] = peerCtrlIndex
+
+
+    def greenmilk(self, **params):
+        trk = params.get('trk', 2)  # global params ignore this?
+
+        for param_name, param_value in params.items():
+            if param_name == 'trk':
+                continue
+            peerCtrlIndex = self.lookups[param_name]
+            self.buzz.SendPeerCtrlChange(peerCtrlIndex, trk, param_value)
