@@ -17,6 +17,8 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
+# These scales are taken from Supercollider's scales file/dict
+
 distances = {
     
     # TWELVE TONES PER OCTAVE
