@@ -95,7 +95,7 @@ def pbseq_func(triggers, behaviours, tick, wrap_around=True):
     return None
 
 
-class Assign_Greenmilk:
+class Assign_Synth:
     ''' expects input like
     
     params2 = [
@@ -110,7 +110,7 @@ class Assign_Greenmilk:
         2, 'note',       0,
         2, 'velocity',   1
     ]
-    milkysyn = assign_greenmilk(buzz, "Green Milk", 16, params2)
+    milkysyn = Assign_Synth(buzz, "Green Milk", 16, params2)
     milkysyn.send( ... )
     '''
 
@@ -137,3 +137,18 @@ class Assign_Greenmilk:
                 continue
             peerCtrlIndex = self.lookups[param_name]
             self.buzz.SendPeerCtrlChange(peerCtrlIndex, trk, param_value)
+
+def pattern_loader(file_path):
+    f = open(file_path, 'r')
+    pattern = {}
+
+    try:
+        for line in f.readlines():
+            if not line:
+                continue
+            pt = line.split(':')
+            pattern[pt[0]] = [int(i.strip()) for i in pt[1].strip().split(' ')]
+
+    finally:
+        f.close()
+        return pattern
