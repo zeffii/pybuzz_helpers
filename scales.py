@@ -169,3 +169,23 @@ distances = {
     'sikah': ([0,3,7,11,14,17,21], 24),
     'nahawand': ([0,4,6,10,14,16,22], 24)
 }
+
+def make_chord(base, scale, intervals):
+    '''
+    takes intervals = [0,1,1,1,2]
+    numbers in intervals represent num of allowed distances to jump from the previous note.
+    '''
+    dist, total_distance = scale
+    
+    outmix = []
+    for i in range(6):
+        outmix.extend([j + (i*total_distance) for j in dist])
+    
+    cpts = []
+    last_index = 0
+    for i in intervals:
+        last_index += i
+        cpts.append(base + outmix[last_index])
+    
+    return cpts
+
