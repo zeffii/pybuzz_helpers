@@ -170,22 +170,23 @@ distances = {
     'nahawand': ([0,4,6,10,14,16,22], 24)
 }
 
-def make_chord(base, scale, intervals):
-    '''
-    takes intervals = [0,1,1,1,2]
-    numbers in intervals represent num of allowed distances to jump from the previous note.
-    '''
-    dist, total_distance = scale
-    
-    outmix = []
-    for i in range(6):
-        outmix.extend([j + (i*total_distance) for j in dist])
-    
-    cpts = []
-    last_index = 0
-    for i in intervals:
-        last_index += i
-        cpts.append(base + outmix[last_index])
-    
-    return cpts
+class Chords:
+
+    def __init__(self, scale, end=6):
+        self.dist, self.total_distance = scale
+        self.outmix = []
+        for i in range(end):
+            self.outmix.extend([j + (i*self.total_distance) for j in self.dist])
+
+    def make_chord(base, intervals):
+        '''
+        takes intervals = [0,1,1,1,2]
+        numbers in intervals represent num of allowed distances to jump from the previous note.
+        '''
+        cpts = []
+        last_index = 0
+        for i in intervals:
+            last_index += i
+            cpts.append(base + self.outmix[last_index])
+        return cpts
 
