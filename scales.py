@@ -163,7 +163,6 @@ distances = {
     # maqam nawa Athar
     'nawaAthar': ([0,4,6,12,14,16,22], 24),
     'nikriz': ([0,4,6,12,14,18,20], 24),
-    'atharKurd': ([0,2,6,12,14,16,22], 24),
 
     # Ascending/descending scales
     'melodicMinor': ([0,2,3,5,7,9,11], 12),
