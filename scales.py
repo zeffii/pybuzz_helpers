@@ -178,7 +178,7 @@ class Chords:
         for i in range(end):
             self.outmix.extend([j + (i*self.total_distance) for j in self.dist])
 
-    def make_chord(base, intervals):
+    def make_chord(self, base, intervals):
         '''
         takes intervals = [0,1,1,1,2]
         numbers in intervals represent num of allowed distances to jump from the previous note.
